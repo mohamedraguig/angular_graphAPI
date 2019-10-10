@@ -1,0 +1,28 @@
+<h1>Contacts List</h1>
+<mat-list>
+  <mat-selection-list #contactList [(ngModel)]="contactsList">
+    <mat-list-option *ngFor="let contact of contacts" [value]="contact.emailAddresses[0].address">
+      <mat-list-item>
+        <h4 matLine>{{contact.displayName}}</h4>
+        <mat-list-item *ngFor="let emailAddress of contact.emailAddresses">
+          <h4 matLine>{{emailAddress.address}}</h4>
+        </mat-list-item>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list-option>
+  </mat-selection-list>
+</mat-list>
+<br>
+<h4>Envoi de mails</h4>
+<div class="container">
+  <mat-form-field>
+      <input #destinataires matInput placeholder="Destinataires" [(ngModel)]="contactsList" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input #objet matInput placeholder="Objet" required>
+  </mat-form-field>
+  <mat-form-field>
+    <textarea #message matInput placeholder="Message"></textarea>
+  </mat-form-field>
+</div>
+<button mat-raised-button (click)="sendMail(destinataires.value,objet.value,message.value)">Envoyer</button>
